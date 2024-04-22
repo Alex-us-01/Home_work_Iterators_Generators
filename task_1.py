@@ -7,23 +7,40 @@
 class FlatIterator:
 
     def __init__(self, list_of_list):
-        self.input_list = list_of_list
-        self.result = []
+        self.incoming_list = list_of_list
+
 
     def __iter__(self):
         self.counter = 0
-
+        self.internal_counter = 0
         return self
 
     def __next__(self):
-        if self.counter < len(self.input_list):
-            item = self.input_list[self.counter]
-            self.counter += 1
-            self.result.extend(item)
-            # print(self.result)
-            return item
-        else:
+        if self.counter >= len(self.incoming_list):
+
             raise StopIteration
+        else:
+            # print(self.counter)
+            length_internal_list = len(self.incoming_list[self.counter])
+            if self.internal_counter < length_internal_list:
+                result = (self.incoming_list[self.counter][self.internal_counter])
+                self.internal_counter += 1
+            else:
+
+                self.internal_counter = 0
+                result = (self.incoming_list[self.counter][self.internal_counter])
+                self.internal_counter += 1
+                self.counter += 1
+            # print(result)
+            return result
+
+
+
+
+
+
+
+
 
 
 list_of_lists_1 = [
@@ -31,9 +48,15 @@ list_of_lists_1 = [
         ['d', 'e', 'f', 'h', False],
         [1, 2, None]
     ]
+# list_a = list(FlatIterator(list_of_lists_1))
+# print(list_a)
 
+
+list_2 = []
 for i in FlatIterator(list_of_lists_1):
     print(i)
+    # list_2.append(i)
+
 
 #['a', 'b', 'c', 'd', 'e', 'f', 'h', False, 1, 2, None]
 
