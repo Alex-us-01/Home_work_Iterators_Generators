@@ -8,6 +8,7 @@ class FlatIterator:
 
     def __init__(self, list_of_list):
         self.incoming_list = list_of_list
+        # print(f'LENGTH_INCOMING_LIST - {len(self.incoming_list)}')
 
 
     def __iter__(self):
@@ -16,8 +17,9 @@ class FlatIterator:
         return self
 
     def __next__(self):
-        if self.counter >= len(self.incoming_list):
-
+        # print(f'SELF.COUNTER - {self.counter}')
+        # print(f'SELF.INTERNAL_COUNTER - {self.internal_counter}')
+        if self.counter == (len(self.incoming_list) - 1) and self.internal_counter == len(self.incoming_list):
             raise StopIteration
         else:
             # print(self.counter)
@@ -26,20 +28,13 @@ class FlatIterator:
                 result = (self.incoming_list[self.counter][self.internal_counter])
                 self.internal_counter += 1
             else:
-
+                self.counter += 1
                 self.internal_counter = 0
                 result = (self.incoming_list[self.counter][self.internal_counter])
                 self.internal_counter += 1
-                self.counter += 1
+
             # print(result)
             return result
-
-
-
-
-
-
-
 
 
 
@@ -48,38 +43,38 @@ list_of_lists_1 = [
         ['d', 'e', 'f', 'h', False],
         [1, 2, None]
     ]
-# list_a = list(FlatIterator(list_of_lists_1))
-# print(list_a)
+list_a = list(FlatIterator(list_of_lists_1))
+print(list_a)
 
 
-list_2 = []
-for i in FlatIterator(list_of_lists_1):
-    print(i)
+# list_2 = []
+# for i in FlatIterator(list_of_lists_1):
+#     print(i)
     # list_2.append(i)
 
 
-#['a', 'b', 'c', 'd', 'e', 'f', 'h', False, 1, 2, None]
+check_list = ['a', 'b', 'c', 'd', 'e', 'f', 'h', False, 1, 2, None]
+
+print(list_a == check_list)
 
 
+def test_1():
+
+    list_of_lists_1 = [
+        ['a', 'b', 'c'],
+        ['d', 'e', 'f', 'h', False],
+        [1, 2, None]
+    ]
+
+    for flat_iterator_item, check_item in zip(
+            FlatIterator(list_of_lists_1),
+            ['a', 'b', 'c', 'd', 'e', 'f', 'h', False, 1, 2, None]
+    ):
+
+        assert flat_iterator_item == check_item
+
+    assert list(FlatIterator(list_of_lists_1)) == ['a', 'b', 'c', 'd', 'e', 'f', 'h', False, 1, 2, None]
 
 
-# def test_1():
-#
-#     list_of_lists_1 = [
-#         ['a', 'b', 'c'],
-#         ['d', 'e', 'f', 'h', False],
-#         [1, 2, None]
-#     ]
-#
-#     for flat_iterator_item, check_item in zip(
-#             FlatIterator(list_of_lists_1),
-#             ['a', 'b', 'c', 'd', 'e', 'f', 'h', False, 1, 2, None]
-#     ):
-#
-#         assert flat_iterator_item == check_item
-#
-#     assert list(FlatIterator(list_of_lists_1)) == ['a', 'b', 'c', 'd', 'e', 'f', 'h', False, 1, 2, None]
-#
-#
-# if __name__ == '__main__':
-#     test_1()
+if __name__ == '__main__':
+    test_1()
