@@ -1,14 +1,9 @@
 
-
-'''Доработать класс FlatIterator в коде ниже. Должен получиться итератор, который принимает список списков и возвращает
- их плоское представление, т. е. последовательность, состоящую из вложенных элементов. Функция test в коде ниже также
- должна отработать без ошибок.'''
-
 class FlatIterator:
 
     def __init__(self, list_of_list):
         self.incoming_list = list_of_list
-        # print(f'LENGTH_INCOMING_LIST - {len(self.incoming_list)}')
+
 
 
     def __iter__(self):
@@ -17,12 +12,9 @@ class FlatIterator:
         return self
 
     def __next__(self):
-        # print(f'SELF.COUNTER - {self.counter}')
-        # print(f'SELF.INTERNAL_COUNTER - {self.internal_counter}')
         if self.counter == (len(self.incoming_list) - 1) and self.internal_counter == len(self.incoming_list):
             raise StopIteration
         else:
-            # print(self.counter)
             length_internal_list = len(self.incoming_list[self.counter])
             if self.internal_counter < length_internal_list:
                 result = (self.incoming_list[self.counter][self.internal_counter])
@@ -33,29 +25,8 @@ class FlatIterator:
                 result = (self.incoming_list[self.counter][self.internal_counter])
                 self.internal_counter += 1
 
-            # print(result)
             return result
 
-
-
-list_of_lists_1 = [
-        ['a', 'b', 'c'],
-        ['d', 'e', 'f', 'h', False],
-        [1, 2, None]
-    ]
-list_a = list(FlatIterator(list_of_lists_1))
-print(list_a)
-
-
-# list_2 = []
-# for i in FlatIterator(list_of_lists_1):
-#     print(i)
-    # list_2.append(i)
-
-
-check_list = ['a', 'b', 'c', 'd', 'e', 'f', 'h', False, 1, 2, None]
-
-print(list_a == check_list)
 
 
 def test_1():
